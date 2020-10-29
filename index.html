@@ -3,16 +3,24 @@
   <head>
     <meta charset="utf-8">
     <title>Campo Minato</title>
+    <link rel="stylesheet" href="css/style.css">
   </head>
   <body>
     <h1>Campo Minato</h1>
-    <p>Cerca di non prendere i numeri 'Bomba'!</p>
-    <label for="user_number">Inserisci un numero da 1 a 100</label>
+    <!-- <h4>Seleziona il livello</h4>
+    <select name="difficulty" id="difficulty">
+      <option value="0">0</option>
+      <option value="1">1</option>
+      <option value="2">2</option>
+    </select> -->
+    <p>Cerca di evitare i numeri 'Bomba'!</p>
+    <label id="level" for="user_number">Inserisci un numero </label>
     <input id="userNumber" type="number" name="user_number" value="">
     <button id="play" type="button" name="button">Gioca!</button>
     <p id="playedNumbers">Numeri giocati: </p>
     <h2 id="message"></h2>
     <h3 id="punteggio"></h3>
+    <button id="retry" class="display-none" type="button" name="button">Riprova!</button>
     <script src="js/script.js" charset="utf-8"></script>
   </body>
 </html>

@@ -15,7 +15,10 @@ con difficoltà 2 => tra 1 e 50
 
 
 //definisco le variabili
-var numbers = 100;
+var NUMBERS = 100;
+var BOMBS = 16;
+var MIN_NUM = 1;
+var MAX_NUM = 100;
 
 var bombNumber = [];
 var userNumber = [];
@@ -33,8 +36,8 @@ function numberBetween(min, max){
 }
 
 // genero i 16 'bombNumber'
-while(bombNumber.length < 16){
-  var num =   numberBetween(1, 100);
+while(bombNumber.length < BOMBS){
+  var num =   numberBetween(MIN_NUM, MAX_NUM);
   console.log(num, bombNumber.includes(num));
   if(bombNumber.includes(num) == false){
     bombNumber.push(num);
@@ -43,33 +46,47 @@ while(bombNumber.length < 16){
 console.log('bombs', bombNumber);
 
 play.addEventListener('click', function(){
-  //al click prelevo il numero inserito dall'utente
-  var inputNumber = userNumberEl.value;
+  //al click di 'gioca' prelevo il numero inserito dall'utente
+  var inputNumber = parseInt(userNumberEl.value);
 
 
   console.log('userNumber', inputNumber);
   console.log(bombNumber.includes(parseInt(inputNumber)));
   console.log('userNumber', userNumber);
-
-  //se l'utente inserisce un numero che corrisponde a una bomba perde, altrimenti continua a giocare
-  if(bombNumber.includes(parseInt(inputNumber))){
-    message.innerHTML = 'Hai trovato una bomba! Hai Perso!';
-    score.innerHTML = 'Hai totalizzato ' + userNumber.length + ' punti.';
+  if ((isNaN(inputNumber)) || (inputNumber < MIN_NUM) || (inputNumber > MAX_NUM)){
+    alert('Il numero inserito non è valido!')
   } else {
-    message.innerHTML = 'Inserisci un altro numero';
-
-    //controllo se il numero inserito dall'utente è già stato inserito
-    if(userNumber.includes(inputNumber)){
-      alert('Il numero ' + inputNumber + ' è già stato inserito!');
+    //se l'utente inserisce un numero che corrisponde a una bomba perde, altrimenti continua a giocare
+    if(bombNumber.includes(parseInt(inputNumber))){
+      message.innerHTML = 'Hai trovato una bomba! Hai Perso!';
+      score.innerHTML = 'Hai totalizzato ' + userNumber.length + ' punti.';
+      document.getElementById('retry').classList.add('display-block');
+      document.getElementById('play').classList.add('display-none');
     } else {
-      userNumber.push(inputNumber);//inserisco i numeri dell'utente in un array
+      message.innerHTML = 'Inserisci un altro numero';
 
-      playedNumbers.innerHTML += inputNumber + ', ';//scrive sull'html i numeri giocati
-    }
+      //controllo se il numero inserito dall'utente è già stato inserito
+      if(userNumber.includes(inputNumber)){
+        alert('Il numero ' + inputNumber + ' è già stato inserito!');
+      } else {
+        //inserisco i numeri dell'utente in un array
+        userNumber.push(inputNumber);
+
+        //scrivo sull'html i numeri giocati
+        playedNumbers.innerHTML += inputNumber + ', ';
+      }
+  }
   }
 
   //quando l'utente inserisce tutti i numeri senza bomba vince
-  if(userNumber.length === (numbers - bombNumber.length)){
+  if(userNumber.length === (NUMBERS - BOMBS)){
     message.innerHTML = 'Complimenti! Hai trovato tutti i numeri senza bomba! Hai Vinto!';
+    document.getElementById('retry').classList.add('display-block');
+    document.getElementById('play').classList.add('display-none');
   }
+})
+
+//al click del bottone 'riprova' viene aggiornata la pagina per far ricominciare il gioco
+document.getElementById('retry').addEventListener('click', function(){
+  window.location.reload();
 })
