@@ -36,7 +36,7 @@ function numberBetween(min, max){
 }
 
 // definisco i vari livelli
-var difficulty = document.getElementById('difficulty')
+var difficultyEl = document.getElementById('difficulty')
 
 document.getElementById('level').innerHTML = 'tra ' + MIN_NUM + ' e ' + MAX_NUM;
 
@@ -50,11 +50,11 @@ while(bombNumber.length < BOMBS){
 }
 console.log('bombs', bombNumber);
 
-difficulty.addEventListener('change', function(){
+difficultyEl.addEventListener('change', function(){
   //seleziono il livello di difficoltà
-  difficulty = difficulty.value;
+  var difficultyVal = difficultyEl.value;
 
-  switch (difficulty) {
+  switch (difficultyVal) {
     case '0':
     MAX_NUM = 100
     break;
@@ -64,7 +64,7 @@ difficulty.addEventListener('change', function(){
     case '2':
     MAX_NUM = 50
     break;
-      default: '0'
+
   }
 
   document.getElementById('level').innerHTML = 'tra ' + MIN_NUM + ' e ' + MAX_NUM;
