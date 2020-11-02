@@ -35,6 +35,11 @@ function numberBetween(min, max){
   return Math.floor(Math.random() * (max - min) + min);
 }
 
+// definisco i vari livelli
+var difficulty = document.getElementById('difficulty')
+
+document.getElementById('level').innerHTML = 'tra ' + MIN_NUM + ' e ' + MAX_NUM;
+
 // genero i 16 'bombNumber'
 while(bombNumber.length < BOMBS){
   var num =   numberBetween(MIN_NUM, MAX_NUM);
@@ -44,6 +49,39 @@ while(bombNumber.length < BOMBS){
   }
 }
 console.log('bombs', bombNumber);
+
+difficulty.addEventListener('change', function(){
+  //seleziono il livello di difficoltà
+  difficulty = difficulty.value;
+
+  switch (difficulty) {
+    case '0':
+    MAX_NUM = 100
+    break;
+    case '1':
+    MAX_NUM = 80
+    break;
+    case '2':
+    MAX_NUM = 50
+    break;
+      default: '0'
+  }
+
+  document.getElementById('level').innerHTML = 'tra ' + MIN_NUM + ' e ' + MAX_NUM;
+
+  // genero i 16 'bombNumber'
+  bombNumber = [];
+  while(bombNumber.length < BOMBS){
+    var num =   numberBetween(MIN_NUM, MAX_NUM);
+    console.log(num, bombNumber.includes(num));
+    if(bombNumber.includes(num) == false){
+      bombNumber.push(num);
+    }
+  }
+  console.log('bombs', bombNumber);
+
+})
+
 
 play.addEventListener('click', function(){
   //al click di 'gioca' prelevo il numero inserito dall'utente
